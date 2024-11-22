@@ -1,0 +1,33 @@
+name: ReUseable-Workflow  Example
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: string
+      run-tests:
+        required: true
+        type: boolean
+
+jobs:
+  test:
+    name: Test workflow
+    runs-on: ubuntu-latest
+    if: ${{inputs.run-tests}}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: setup Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{inputs.node-version}}
+      
+      - name: Install Dependencies
+        run: npm install
+      
+      - name: Run Test
+        run: npm run test
+        

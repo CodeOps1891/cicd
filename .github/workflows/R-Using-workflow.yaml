@@ -1,0 +1,18 @@
+name: Using  ReUseable workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  calling-Reuseable-workflow:
+      uses: ./.github/workflows/Reuseable-workflows.yaml
+      with:
+        node-version: 18
+        run-test: true
+
+
