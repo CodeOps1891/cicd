@@ -28,9 +28,7 @@
 name: Run on Self-Hosted Runner
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   build:
