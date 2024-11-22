@@ -23,8 +23,6 @@
 
 #   ********************************   PipeLine  *********************************
 
-
-
 name: Run on Self-Hosted Runner
 
 on:
@@ -38,3 +36,7 @@ jobs:
     steps:
       - name: Print VM Name
         run: echo "$(hostname)"
+      
+      - name: Print Name
+        run: echo "$(whoami)"
+
