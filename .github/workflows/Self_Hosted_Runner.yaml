@@ -1,6 +1,6 @@
 # Goto Repo Settings -> Actions -> Runner -> Click on Add Add Runner
 
-# ******** Download The runner Package By running following command  *********
+# ******** Download The runner Package By running commands given in repo EG for my repo following commands  *********
 
 # Create a folder
     # $ mkdir actions-runner && cd actions-runner
