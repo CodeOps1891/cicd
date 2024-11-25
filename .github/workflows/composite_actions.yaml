@@ -1,0 +1,36 @@
+
+# A composite action allows you to define reusable sequences of steps in a separate YAML file that can be invoked in workflows.
+# These actions are stored in a repository under .github/actions/<action-name>/action.yml.
+ name: Use Composite Action
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Run Composite Action
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use My Composite Action
+        uses: ./.github/actions/my-composite-action
+        with:
+          node-version: '20'
+          run-tests: 'true'
+
+  
+ # you can host a composite action in a separate repository, even under a different GitHub account, and use it in your workflows. 
+ # This allows you to share reusable actions across multiple projects, organizations, or teams.
+
+ # Create composite action in another GH-REPo in same folder-structure way as ==========> .github/actions/my-action/action.yml
+ # Access That Action using  ==========>  uses: USERNAME/REPO-NAME/.github/actions/my-action@main  with: node-version: 20 run-tests: true
+
+ # github/
+  # actions/
+  #   my-action1/   
+  #     action.yml  # Composite Action 1  ( Filename must be action.yml or action.yaml )  ( It is strict requirement ) ( we cant have multiple yml files inside my-action1)
+  #   my-action2/
+  #     action.yml  # Composite Action 2
+  #   my-action3/                          # my-action3 is custom name. we can assign any name to it
+  #     action.yml  # Composite Action 2

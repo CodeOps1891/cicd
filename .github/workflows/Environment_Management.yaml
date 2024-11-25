@@ -1,0 +1,78 @@
+# Using environments in GitHub Actions allows you to manage deployments to different stages, such as staging, production, or review environments. 
+# You can define environments in your github action file using if condition to run job in specific environment in your workflow. 
+# Environments also support approval gates and secrets.
+
+name: Environment Management Workflow
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+      - feature/*
+
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref_name == 'staging' }}
+    environment: staging
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Build application
+        run: |
+          npm run build
+
+      - name: Deploy to Staging
+        run: |
+          echo "Deploying to Staging"
+          echo "Deployment URL: https://staging.example.com"
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref_name == 'main' }}
+    environment: production
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Build application
+        run: |
+          npm run build
+
+      - name: Deploy to Production
+        run: |
+          echo "Deploying to Production"
+          echo "Deployment URL: https://production.example.com"
+
+  review-environment:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref_name, 'feature/')
+    environment:
+      name: review-${{ github.ref_name }}
+      url: https://review-${{ github.ref_name }}.example.com
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Build application
+        run: |
+          npm run build
+
+      - name: Deploy to Review Environment
+        run: |
+          echo "Deploying to Review Environment"
+          echo "Deployment URL: https://review-${{ github.ref_name }}.example.com"

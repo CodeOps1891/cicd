@@ -30,4 +30,34 @@ jobs:
       
       - name: Run Test
         run: npm run test
-        
+
+
+#  =======>      differences between Reusable Workflows and Custom Actions
+
+#       Reusable Workflows are workflows that you define in a separate YAML file within your repository (or from another repository) and can be reused in other workflows
+
+#       Use Cases:
+#         Shared workflows for different repositories: Reusable workflows are great when you have a common set of tasks (like testing, linting, or deployment) that need to be executed across multiple repositories.
+#         Multi-step processes: If you want to define a sequence of jobs that are common to several workflows, reusable workflows allow you to define these jobs once and reuse them
+#         If your organization has a common pipeline or a set of deployment workflows, reusable workflows are useful to standardize processes across all repositories.
+
+#       Custom Actions are individual steps that can be used in workflows to perform a specific task.
+#       ==>   A Custom Action is designed to perform a single task (like setting up a specific environment, running tests, sending a notification, etc.).
+#       ==>   They are modular and can be easily shared across multiple workflows or even repositories.
+
+#       Use Cases:
+#         Single-purpose tasks: Custom actions are ideal for actions that perform a single, specific task, like setting up a database, sending Slack notifications, or running a specific build task.
+#         Modular workflows: If you want to create reusable pieces of logic (like test setup or notification tasks) that can be plugged into any workflow, you can create custom actions for that.
+#         Simplifying tasks across workflows: For example, you can create a custom action for publishing to a registry, which can then be reused in any workflow.
+
+#       Feature                           ReUseable WorkFlow                                                      Custom Actions
+
+#       Purpose	                Defines a set of jobs and steps to be reused across workflows.	        Performs a specific task or action (like setting up an environment).
+#       Granularity	            More suitable for multi-step workflows or complex tasks.	              Ideal for single, isolated tasks.
+#       Reuse	                  Can be used in multiple workflows within or across repositories.	      Can be used as a reusable step in workflows or accross repos
+#       Input Parameters        Can accept inputs when invoked from another workflow.	                  Can accept inputs as part of the action's configuration.
+#       Execution Context	      Can be invoked by workflows, often used for things like deployment.	    Executes during a workflow as part of a job.
+#       Complexity	            Can contain multiple jobs, steps, and actions.	                        Focused on one action or task, simple to create and maintain.
+
+#       In summary, reusable workflows are best for workflows that involve multiple jobs and a sequence of tasks, 
+#       while custom actions are ideal for reusable, isolated tasks that can be plugged into multiple workflows.

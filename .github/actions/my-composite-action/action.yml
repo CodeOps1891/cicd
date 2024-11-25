@@ -1,0 +1,27 @@
+name: My Composite Action
+description: A composite action to set up Node.js, install dependencies, and run tests.
+inputs:
+  node-version:
+    description: 'Node.js version to use'
+    required: true
+  run-tests:
+    description: 'Whether to run tests (true/false)'
+    default: 'true'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run Tests
+      if: ${{ inputs.run-tests == 'true' }}
+      run: npm test

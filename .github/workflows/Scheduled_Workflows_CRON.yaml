@@ -1,0 +1,34 @@
+name: Scheduled Workflow Example
+
+on:
+  schedule:
+    - cron: "0 3 * * *"  # Run Cron at 3:00 AM UTC every day
+
+#            ┌───────────── minute (0 - 59)
+#            │ ┌───────────── hour (0 - 23)
+#            │ │ ┌───────────── day of the month (1 - 31)
+#            │ │ │ ┌───────────── month (1 - 12)
+#            │ │ │ │ ┌───────────── day of the week (0 - 7) (0 and 7 represent Sunday)
+#            │ │ │ │ │
+#            │ │ │ │ │
+#            * * * * *
+  workflow_dispatch:   # to run pipeline manually if needed
+
+jobs:
+  scheduled-task:
+
+    name: Run scheduled Task
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Print Time
+        run: echo "The current UTC time is $(date -u)"
+
+      - name: Run a Script
+        run: |
+          echo "Running a scheduled task..."
+          # Add your script or command here
+          node my_script.js

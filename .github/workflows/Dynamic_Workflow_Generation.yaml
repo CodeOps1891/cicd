@@ -1,0 +1,75 @@
+# Dynamic Workflow Generation in GitHub Actions allows you to dynamically create workflows based on certain conditions, 
+# or generate different workflow steps or jobs at runtime. This can be helpful in cases where workflows need to change 
+# depending on certain variables, inputs, or other dynamic factors.
+
+# We use if conditions for dynamically deciding which jobs to run.
+
+name: Dynamic Workflow Example
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Select build type'
+        required: true
+        default: 'build'
+        type: choice
+        options:
+          - 'build'
+          - 'test'
+          - 'deploy'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.build_type == 'build' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Build
+        run: npm run build
+
+  test:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.build_type == 'test' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm test
+
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.build_type == 'deploy' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Deploy to production
+        run: npm run deploy
